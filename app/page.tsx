@@ -24,7 +24,7 @@ export default function Home() {
   const [votedItemIds, setVotedItemIds] = useState<Set<string>>(new Set());
   const [toast, setToast] = useState<ToastState>(null);
   const [confettiActive, setConfettiActive] = useState(false);
-  const toastTimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const stats = useMemo(() => computeStats(items), [items]);
   const registryItems = useMemo(
@@ -39,8 +39,8 @@ export default function Home() {
 
   function showToast(message: string, tone: "sage" | "coral" | "ink" = "ink") {
     setToast({ message, tone });
-    if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
-    toastTimerRef.current = window.setTimeout(() => setToast(null), 3200);
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = setTimeout(() => setToast(null), 3200);
   }
 
   function handleAddItem(item: PurchaseItem) {
@@ -90,7 +90,7 @@ export default function Home() {
 
     if (status === "saved") {
       setConfettiActive(true);
-      window.setTimeout(() => setConfettiActive(false), 2800);
+      setTimeout(() => setConfettiActive(false), 2800);
       showToast(
         item ? `Nice work — you just saved on the ${item.name}.` : "Saved!",
         "sage"
